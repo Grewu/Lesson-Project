@@ -1,7 +1,0 @@
-db:
-  db.url: jdbc:postgresql://localhost:5432/postgres
-  db.username: postgres
-  db.password: postgres
-
-liguilbase:
-  change-log: db/changelog/main.changelog.xml
