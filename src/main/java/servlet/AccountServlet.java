@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import dao.AccountDao;
 import dao.impl.AccountDaoImpl;
 import data.AccountDto;
-import lombok.extern.slf4j.Slf4j;
 import mapper.AccountMapper;
 import mapper.AccountMapperImpl;
 import service.api.AccountService;
@@ -19,19 +18,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@Slf4j
-@WebServlet("/accounts/changeBalance")
+@WebServlet("/account")
 public class AccountServlet extends HttpServlet {
-    private  AccountMapper mapper = new AccountMapperImpl();
-    private  AccountDao accountDao = new AccountDaoImpl();
+    private final AccountMapper mapper = new AccountMapperImpl();
+    private final AccountDao accountDao = new AccountDaoImpl();
 
-    private  AccountService accountService = new AccountServiceImpl(mapper, accountDao);
+    private final AccountService accountService = new AccountServiceImpl(mapper, accountDao);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Long id = Long.valueOf(req.getParameter("id"));
+        String json = new Gson().toJson(accountService.findById(id));
         try (PrintWriter out = resp.getWriter()) {
-            Long id = Long.valueOf(req.getParameter("id"));
-            String json = new Gson().toJson(accountService.findById(id));
             out.write(json);
             resp.setStatus(200);
         }

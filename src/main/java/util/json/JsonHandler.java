@@ -2,15 +2,15 @@ package util.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import lombok.experimental.UtilityClass;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+@UtilityClass
 public class JsonHandler {
-    private JsonHandler() {
-    }
 
     public static Gson getGsonFormat() {
         return new GsonBuilder()

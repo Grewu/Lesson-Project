@@ -1,11 +1,7 @@
 package data;
 
-import java.math.BigDecimal;
-
 public record AccountDto(
-        Long accountId,
+        Long id,
         Long userId,
-        Long bankId,
-        BigDecimal balance,
-        String accountNumber) {
+        Long bankId) {
 }

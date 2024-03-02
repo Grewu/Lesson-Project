@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import dao.TransactionDao;
 import dao.impl.TransactionDaoImpl;
 import data.TransactionDto;
+import lombok.RequiredArgsConstructor;
 import mapper.TransactionMapper;
 import mapper.TransactionMapperImpl;
 import service.api.TransactionService;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/transaction")
+@RequiredArgsConstructor
 public class TransactionServlet extends HttpServlet {
     private final TransactionMapper mapper = new TransactionMapperImpl();
     private final TransactionDao bankDao = new TransactionDaoImpl();
