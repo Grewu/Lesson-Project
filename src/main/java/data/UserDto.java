@@ -4,8 +4,7 @@ import java.math.BigDecimal;
 
 public record UserDto(
         Long id,
-        String username,
-        char[] password,
+        String name,
         String email,
         BigDecimal cash) {
 }
