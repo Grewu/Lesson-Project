@@ -1,7 +1,7 @@
 package servlet;
 
 import com.google.gson.Gson;
-import dao.BankDao;
+import dao.api.BankDao;
 import dao.impl.BankDaoImpl;
 import data.BankDto;
 import mapper.BankMapper;

@@ -1,6 +1,6 @@
 package service.impl;
 
-import dao.AccountDao;
+import dao.api.AccountDao;
 import data.AccountDto;
 import entity.Account;
 import mapper.AccountMapper;
@@ -37,7 +37,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void update(AccountDto accountDto) {
-        accountDao.update(accountDto);
+        Account account = mapper.toAccount(accountDto);
+        accountDao.update(account);
     }
 
     @Override

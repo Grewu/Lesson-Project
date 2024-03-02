@@ -11,10 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -26,10 +24,12 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(optional = false, fetch = FetchType.EAGER)
+
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User userId;
-    @ManyToMany
+
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "bank_id")
-    private List<Bank> bankId;
+    private Bank bank;
 }

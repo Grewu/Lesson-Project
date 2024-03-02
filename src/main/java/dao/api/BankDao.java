@@ -1,4 +1,4 @@
-package dao;
+package dao.api;
 
 import data.BankDto;
 import entity.Bank;

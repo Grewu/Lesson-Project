@@ -1,6 +1,6 @@
 package dao.impl;
 
-import dao.AccountDao;
+import dao.api.AccountDao;
 import entity.Account;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -29,7 +29,7 @@ public class AccountDaoImpl implements AccountDao {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            List<Account> accounts = session.createQuery("FROM Account", Account.class).getResultList();
+            List<Account> accounts = session.createQuery("SELECT a FROM Account a", Account.class).list();
 
             session.getTransaction().commit();
             return accounts;

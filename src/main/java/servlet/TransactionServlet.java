@@ -1,7 +1,7 @@
 package servlet;
 
 import com.google.gson.Gson;
-import dao.TransactionDao;
+import dao.api.TransactionDao;
 import dao.impl.TransactionDaoImpl;
 import data.TransactionDto;
 import lombok.RequiredArgsConstructor;

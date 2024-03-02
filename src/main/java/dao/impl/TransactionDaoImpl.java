@@ -1,6 +1,6 @@
 package dao.impl;
 
-import dao.TransactionDao;
+import dao.api.TransactionDao;
 import entity.Transaction;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,7 +28,7 @@ public class TransactionDaoImpl implements TransactionDao {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            List<Transaction> transactions = session.createQuery("FROM Transaction ", Transaction.class).getResultList();
+            List<Transaction> transactions = session.createQuery("SELECT t FROM Transaction t", Transaction.class).getResultList();
 
             session.getTransaction().commit();
             return transactions;

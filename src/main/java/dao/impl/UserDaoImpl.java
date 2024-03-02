@@ -1,6 +1,6 @@
 package dao.impl;
 
-import dao.UserDao;
+import dao.api.UserDao;
 import entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,7 +28,7 @@ public class UserDaoImpl implements UserDao {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            List<User> users = session.createQuery("FROM User ", User.class).getResultList();
+            List<User> users = session.createQuery("SELECT u FROM User u ", User.class).list();
 
             session.getTransaction().commit();
             return users;

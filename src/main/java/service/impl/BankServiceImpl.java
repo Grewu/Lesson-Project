@@ -1,6 +1,6 @@
 package service.impl;
 
-import dao.BankDao;
+import dao.api.BankDao;
 import data.BankDto;
 import entity.Bank;
 import mapper.BankMapper;
@@ -38,7 +38,8 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public void update(BankDto bankDto) {
-        bankDao.update(bankDto);
+        Bank bank = mapper.toBank(bankDto);
+        bankDao.update(bank);
     }
 
     @Override

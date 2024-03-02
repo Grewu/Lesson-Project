@@ -22,8 +22,9 @@ public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToMany
-    @Column(name = "user_id")
-    private List<User> userId;
+
+    @ManyToMany(mappedBy = "banks")
+    private List<User> users;
+
     private String bankName;
 }

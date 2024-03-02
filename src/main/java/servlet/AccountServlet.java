@@ -1,7 +1,7 @@
 package servlet;
 
 import com.google.gson.Gson;
-import dao.AccountDao;
+import dao.api.AccountDao;
 import dao.impl.AccountDaoImpl;
 import data.AccountDto;
 import mapper.AccountMapper;

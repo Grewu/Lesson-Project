@@ -1,6 +1,6 @@
 package service.impl;
 
-import dao.TransactionDao;
+import dao.api.TransactionDao;
 import data.TransactionDto;
 import entity.Transaction;
 import mapper.TransactionMapper;
@@ -37,7 +37,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public void update(TransactionDto transactionDto) {
-        transactionDao.update(transactionDto);
+        Transaction transaction = mapper.toTransaction(transactionDto);
+        transactionDao.update(transaction);
     }
 
     @Override

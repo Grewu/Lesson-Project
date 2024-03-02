@@ -1,6 +1,6 @@
 package service.impl;
 
-import dao.UserDao;
+import dao.api.UserDao;
 import data.UserDto;
 import entity.User;
 import mapper.UserMapper;
@@ -37,7 +37,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(UserDto userDto) {
-        userDao.update(userDto);
+        User user = mapper.toUser(userDto);
+        userDao.update(user);
     }
 
     @Override

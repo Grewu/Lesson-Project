@@ -1,7 +1,6 @@
 package dao.impl;
 
-import dao.BankDao;
-import entity.Account;
+import dao.api.BankDao;
 import entity.Bank;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -29,7 +28,7 @@ public class BankDaoImpl implements BankDao {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            List<Bank> banks = session.createQuery("FROM Bank", Bank.class).getResultList();
+            List<Bank> banks = session.createQuery("SELECT b FROM Bank b", Bank.class).list();
 
             session.getTransaction().commit();
             return banks;
