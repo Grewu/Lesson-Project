@@ -12,7 +12,7 @@ public interface BankDao {
 
     Long save(Bank bank);
 
-    void update(BankDto bankDto);
+    void update(Bank bank);
 
 
     void delete(Long id);

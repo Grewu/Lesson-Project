@@ -12,7 +12,7 @@ public interface TransactionDao {
 
     Long save(Transaction product);
 
-    void update(TransactionDto accountDto);
+    void update(Transaction transaction);
 
 
     void delete(Long id);

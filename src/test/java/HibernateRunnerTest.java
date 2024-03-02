@@ -1,11 +1,12 @@
 import entity.User;
 import org.junit.jupiter.api.Test;
+import util.HibernateTestUtil;
 import util.hibernate.HibernateUtil;
 
 public class HibernateRunnerTest {
     @Test
     void checkH2() {
-        try (var sessionFactory = HibernateUtil.buildSessionFactory();
+        try (var sessionFactory = HibernateTestUtil.buildSessionFactory();
              var session = sessionFactory.openSession()) {
             session.beginTransaction();
 

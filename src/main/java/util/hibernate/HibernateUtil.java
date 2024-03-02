@@ -9,11 +9,15 @@ import org.hibernate.cfg.Configuration;
 @UtilityClass
 public class HibernateUtil {
     public static SessionFactory buildSessionFactory() {
+        Configuration configuration = getConfiguration();
+        configuration.configure();
+        return configuration.buildSessionFactory();
+    }
+
+    public static Configuration getConfiguration() {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(User.class);
         configuration.addAnnotatedClass(Account.class);
-        configuration.configure();
-
-        return configuration.buildSessionFactory();
+        return configuration;
     }
 }

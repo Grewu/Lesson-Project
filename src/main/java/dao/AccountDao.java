@@ -14,7 +14,7 @@ public interface AccountDao {
 
     Long save(Account product);
 
-    void update(AccountDto accountDto);
+    void update(Account account);
 
 
     void delete(Long id);

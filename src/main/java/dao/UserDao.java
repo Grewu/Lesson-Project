@@ -13,7 +13,7 @@ public interface UserDao {
 
     Long save(User user);
 
-    void update(UserDto userDto);
+    void update(User user);
 
 
     void delete(Long id);
