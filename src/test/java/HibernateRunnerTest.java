@@ -1,9 +1,11 @@
 import entity.User;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Test;
 import util.hibernate.HibernateUtil;
 
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.LockModeType;
+import javax.transaction.Transactional;
 
 public class HibernateRunnerTest {
     @Test
@@ -43,6 +45,19 @@ public class HibernateRunnerTest {
             criteria.select(user);
 
             session.createQuery(criteria).list();
+
+
+            session.getTransaction().commit();
+        }
+    }
+
+    @Test
+    @Transactional
+    void checkTransaction() {
+        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+             Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            User user = session.find(User.class, 1L, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
 
 
             session.getTransaction().commit();
