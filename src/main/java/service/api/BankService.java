@@ -11,7 +11,7 @@ public interface BankService {
 
     List<Bank> findAll(BankDto bankDto);
 
-    Long create(BankDto bankDto);
+    Bank create(BankDto bankDto);
 
     void update(BankDto bankDto);
 

@@ -11,7 +11,7 @@ public interface AccountService {
 
     List<Account> findAll();
 
-    Long create(AccountDto accountDto);
+    Account create(AccountDto accountDto);
 
     void update(AccountDto accountDto);
 

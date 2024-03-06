@@ -1,6 +1,7 @@
 package service.impl;
 
 import dao.api.AccountDao;
+import dao.api.DaoBase;
 import data.AccountDto;
 import entity.Account;
 import mapper.AccountMapper;
@@ -12,16 +13,16 @@ import java.util.Optional;
 
 public class AccountServiceImpl implements AccountService {
     private final AccountMapper mapper;
-    private final AccountDao accountDao;
+    private final DaoBase<Long,Account> accountDao;
 
-    public AccountServiceImpl(AccountMapper mapper, AccountDao accountDao) {
+    public AccountServiceImpl(AccountMapper mapper, DaoBase<Long, Account> accountDao) {
         this.mapper = mapper;
         this.accountDao = accountDao;
     }
 
     @Override
     public Optional<Account> findById(Long id) {
-        return Optional.ofNullable(accountDao.findById(id));
+        return accountDao.findById(id);
     }
 
     @Override
@@ -30,9 +31,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Long create(AccountDto accountDto) {
+    public Account create(AccountDto accountDto) {
         Account account = mapper.toAccount(accountDto);
-        return accountDao.save(account);
+        accountDao.save(account);
+        return account;
     }
 
     @Override

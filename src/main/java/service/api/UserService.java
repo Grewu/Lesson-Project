@@ -11,7 +11,7 @@ public interface UserService {
 
     List<User> findAll(UserDto userDto);
 
-    Long create(UserDto userDto);
+    User create(UserDto userDto);
 
     void update(UserDto userDto);
 

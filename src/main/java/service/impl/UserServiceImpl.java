@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findById(Long id) {
-        return Optional.ofNullable(userDao.findById(id));
+        return userDao.findById(id);
     }
 
     @Override
@@ -30,9 +30,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long create(UserDto userDto) {
+    public User create(UserDto userDto) {
         User user = mapper.toUser(userDto);
-        return userDao.save(user);
+        userDao.save(user);
+        return user;
     }
 
     @Override

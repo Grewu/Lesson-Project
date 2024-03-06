@@ -7,10 +7,11 @@ import org.hibernate.SessionFactory;
 import util.hibernate.HibernateUtil;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
     @Override
-    public User findById(Long id) {
+    public Optional<User> findById(Long id) {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -19,7 +20,7 @@ public class UserDaoImpl implements UserDao {
 
             session.getTransaction().commit();
 
-            return user;
+            return Optional.ofNullable(user);
         }
     }
 
@@ -36,7 +37,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Long save(User user) {
+    public User save(User user) {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -45,7 +46,7 @@ public class UserDaoImpl implements UserDao {
 
             session.getTransaction().commit();
 
-            return user.getId();
+            return user;
         }
     }
 

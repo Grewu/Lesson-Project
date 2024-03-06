@@ -22,7 +22,7 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public Optional<Bank> findById(Long id) {
-        return Optional.ofNullable(bankDao.findById(id));
+        return bankDao.findById(id);
     }
 
     @Override
@@ -31,9 +31,10 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public Long create(BankDto bankDto) {
+    public Bank create(BankDto bankDto) {
         Bank bank = mapper.toBank(bankDto);
-        return bankDao.save(bank);
+        bankDao.save(bank);
+        return bank;
     }
 
     @Override

@@ -1,13 +1,16 @@
 package servlet;
 
 import com.google.gson.Gson;
-import dao.api.AccountDao;
+import dao.api.DaoBase;
 import dao.impl.AccountDaoImpl;
 import data.AccountDto;
+import entity.Account;
 import mapper.AccountMapper;
 import mapper.AccountMapperImpl;
+import org.hibernate.SessionFactory;
 import service.api.AccountService;
 import service.impl.AccountServiceImpl;
+import util.hibernate.HibernateUtil;
 import util.json.JsonHandler;
 
 import javax.servlet.ServletException;
@@ -20,8 +23,9 @@ import java.io.PrintWriter;
 
 @WebServlet("/account")
 public class AccountServlet extends HttpServlet {
+    private final SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
     private final AccountMapper mapper = new AccountMapperImpl();
-    private final AccountDao accountDao = new AccountDaoImpl();
+    private final DaoBase<Long, Account> accountDao = new AccountDaoImpl(sessionFactory);
 
     private final AccountService accountService = new AccountServiceImpl(mapper, accountDao);
 

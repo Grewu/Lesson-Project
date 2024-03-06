@@ -11,7 +11,7 @@ public interface TransactionService {
 
     List<Transaction> findAll(TransactionDto transactionDto);
 
-    Long create(TransactionDto transactionDto);
+    Transaction create(TransactionDto transactionDto);
 
     void update(TransactionDto transactionDto);
 

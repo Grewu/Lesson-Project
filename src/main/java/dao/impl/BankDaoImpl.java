@@ -7,10 +7,11 @@ import org.hibernate.SessionFactory;
 import util.hibernate.HibernateUtil;
 
 import java.util.List;
+import java.util.Optional;
 
 public class BankDaoImpl implements BankDao {
     @Override
-    public Bank findById(Long id) {
+    public Optional<Bank> findById(Long id) {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -19,7 +20,7 @@ public class BankDaoImpl implements BankDao {
 
             session.getTransaction().commit();
 
-            return bank;
+            return Optional.ofNullable(bank);
         }
     }
 
@@ -36,7 +37,7 @@ public class BankDaoImpl implements BankDao {
     }
 
     @Override
-    public Long save(Bank bank) {
+    public Bank save(Bank bank) {
         try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
             session.beginTransaction();
@@ -45,7 +46,7 @@ public class BankDaoImpl implements BankDao {
 
             session.getTransaction().commit();
 
-            return bank.getId();
+            return bank;
         }
     }
 

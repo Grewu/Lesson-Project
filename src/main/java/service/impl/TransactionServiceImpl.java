@@ -21,7 +21,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Optional<Transaction> findById(Long id) {
-        return Optional.ofNullable(transactionDao.findById(id));
+        return transactionDao.findById(id);
     }
 
     @Override
@@ -30,9 +30,10 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Long create(TransactionDto transactionDto) {
+    public Transaction create(TransactionDto transactionDto) {
         Transaction transaction = mapper.toTransaction(transactionDto);
-        return transactionDao.save(transaction);
+        transactionDao.save(transaction);
+        return transaction;
     }
 
     @Override
