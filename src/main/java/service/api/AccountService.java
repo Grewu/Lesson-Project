@@ -2,18 +2,9 @@ package service.api;
 
 import data.AccountDto;
 import entity.Account;
+import service.CRUDService;
 
-import java.util.List;
-import java.util.Optional;
 
-public interface AccountService {
-    Optional<Account> findById(Long id);
+public interface AccountService extends CRUDService<Account, Long, AccountDto> {
 
-    List<Account> findAll();
-
-    Account create(AccountDto accountDto);
-
-    void update(AccountDto accountDto);
-
-    void delete(Long id);
 }

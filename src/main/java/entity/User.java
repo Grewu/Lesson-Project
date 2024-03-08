@@ -39,8 +39,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "id")
     )
     private List<Bank> banks;
-    @Version
-    private Long version;
     private String name;
     private String email;
     private BigDecimal cash;

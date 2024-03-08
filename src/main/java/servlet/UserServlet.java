@@ -1,14 +1,17 @@
 package servlet;
 
 import com.google.gson.Gson;
-import dao.api.UserDao;
+import dao.RepositoryBase;
 import dao.impl.UserDaoImpl;
 import data.UserDto;
+import entity.User;
 import lombok.RequiredArgsConstructor;
-import mapper.UserMapper;
+import mapper.DtoEntityMapper;
 import mapper.UserMapperImpl;
+import org.hibernate.SessionFactory;
 import service.api.UserService;
 import service.impl.UserServiceImpl;
+import util.hibernate.HibernateUtil;
 import util.json.JsonHandler;
 
 import javax.servlet.ServletException;
@@ -22,9 +25,12 @@ import java.io.PrintWriter;
 @WebServlet("/user")
 @RequiredArgsConstructor
 public class UserServlet extends HttpServlet {
-    private final UserMapper mapper = new UserMapperImpl();
-    private final UserDao userDao = new UserDaoImpl();
-    private final UserService userService = new UserServiceImpl(mapper, userDao);
+    private final SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+    private final DtoEntityMapper<User, UserDto> mapper = new UserMapperImpl();
+    private final RepositoryBase<Long, User, UserDto> userRepositoryBase = new UserDaoImpl(sessionFactory, mapper);
+
+    private final UserService userService = new UserServiceImpl(mapper, userRepositoryBase);
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

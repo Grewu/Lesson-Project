@@ -2,18 +2,8 @@ package service.api;
 
 import data.TransactionDto;
 import entity.Transaction;
+import service.CRUDService;
 
-import java.util.List;
-import java.util.Optional;
+public interface TransactionService extends CRUDService<Transaction, Long, TransactionDto> {
 
-public interface TransactionService {
-    Optional<Transaction> findById(Long id);
-
-    List<Transaction> findAll(TransactionDto transactionDto);
-
-    Transaction create(TransactionDto transactionDto);
-
-    void update(TransactionDto transactionDto);
-
-    void delete(Long id);
 }

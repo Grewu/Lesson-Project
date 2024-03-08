@@ -1,49 +1,16 @@
 package service.impl;
 
-import dao.api.TransactionDao;
+import dao.RepositoryBase;
 import data.TransactionDto;
 import entity.Transaction;
-import mapper.TransactionMapper;
+import mapper.DtoEntityMapper;
+import service.ServiceBase;
 import service.api.TransactionService;
 
-import java.util.List;
-import java.util.Optional;
 
-
-public class TransactionServiceImpl implements TransactionService {
-    private final TransactionMapper mapper;
-    private final TransactionDao transactionDao;
-
-    public TransactionServiceImpl(TransactionMapper mapper, TransactionDao transactionDao) {
-        this.mapper = mapper;
-        this.transactionDao = transactionDao;
+public class TransactionServiceImpl extends ServiceBase<Transaction, Long, TransactionDto> implements TransactionService {
+    public TransactionServiceImpl(DtoEntityMapper<Transaction, TransactionDto> mapper, RepositoryBase<Long, Transaction,TransactionDto> repositoryBase) {
+        super(mapper, repositoryBase);
     }
 
-    @Override
-    public Optional<Transaction> findById(Long id) {
-        return transactionDao.findById(id);
-    }
-
-    @Override
-    public List<Transaction> findAll(TransactionDto transactionDto) {
-        return transactionDao.findAll();
-    }
-
-    @Override
-    public Transaction create(TransactionDto transactionDto) {
-        Transaction transaction = mapper.toTransaction(transactionDto);
-        transactionDao.save(transaction);
-        return transaction;
-    }
-
-    @Override
-    public void update(TransactionDto transactionDto) {
-        Transaction transaction = mapper.toTransaction(transactionDto);
-        transactionDao.update(transaction);
-    }
-
-    @Override
-    public void delete(Long id ) {
-        transactionDao.delete(id);
-    }
 }

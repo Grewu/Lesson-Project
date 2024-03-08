@@ -5,8 +5,6 @@ import entity.Bank;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface BankMapper {
-    Bank toBank(BankDto bankDto);
+public interface BankMapper extends DtoEntityMapper<Bank, BankDto> {
 
-    BankDto toDto(Bank bank);
 }

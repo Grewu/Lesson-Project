@@ -1,14 +1,17 @@
 package servlet;
 
 import com.google.gson.Gson;
-import dao.api.TransactionDao;
+import dao.RepositoryBase;
 import dao.impl.TransactionDaoImpl;
 import data.TransactionDto;
+import entity.Transaction;
 import lombok.RequiredArgsConstructor;
-import mapper.TransactionMapper;
+import mapper.DtoEntityMapper;
 import mapper.TransactionMapperImpl;
+import org.hibernate.SessionFactory;
 import service.api.TransactionService;
 import service.impl.TransactionServiceImpl;
+import util.hibernate.HibernateUtil;
 import util.json.JsonHandler;
 
 import javax.servlet.ServletException;
@@ -22,10 +25,12 @@ import java.io.PrintWriter;
 @WebServlet("/transaction")
 @RequiredArgsConstructor
 public class TransactionServlet extends HttpServlet {
-    private final TransactionMapper mapper = new TransactionMapperImpl();
-    private final TransactionDao bankDao = new TransactionDaoImpl();
+    private final SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+    private final DtoEntityMapper<Transaction, TransactionDto> mapper = new TransactionMapperImpl();
+    private final RepositoryBase<Long, Transaction, TransactionDto> transactionRepositoryBase = new TransactionDaoImpl(sessionFactory, mapper);
 
-    private final TransactionService transactionService = new TransactionServiceImpl(mapper, bankDao);
+    private final TransactionService transactionService = new TransactionServiceImpl(mapper, transactionRepositoryBase);
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

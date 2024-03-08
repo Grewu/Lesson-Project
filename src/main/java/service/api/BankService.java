@@ -2,18 +2,8 @@ package service.api;
 
 import data.BankDto;
 import entity.Bank;
+import service.CRUDService;
 
-import java.util.List;
-import java.util.Optional;
+public interface BankService extends CRUDService<Bank, Long, BankDto> {
 
-public interface BankService {
-    Optional<Bank> findById(Long id);
-
-    List<Bank> findAll(BankDto bankDto);
-
-    Bank create(BankDto bankDto);
-
-    void update(BankDto bankDto);
-
-    void delete(Long id);
 }

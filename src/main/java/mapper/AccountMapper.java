@@ -5,8 +5,6 @@ import entity.Account;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface AccountMapper {
-    Account toAccount(AccountDto accountDto);
+public interface AccountMapper extends DtoEntityMapper<Account, AccountDto> {
 
-    AccountDto toDto(Account account);
 }

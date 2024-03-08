@@ -1,12 +1,12 @@
 package servlet;
 
 import com.google.gson.Gson;
-import dao.api.DaoBase;
+import dao.RepositoryBase;
 import dao.impl.AccountDaoImpl;
 import data.AccountDto;
 import entity.Account;
-import mapper.AccountMapper;
 import mapper.AccountMapperImpl;
+import mapper.DtoEntityMapper;
 import org.hibernate.SessionFactory;
 import service.api.AccountService;
 import service.impl.AccountServiceImpl;
@@ -20,22 +20,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Optional;
 
 @WebServlet("/account")
 public class AccountServlet extends HttpServlet {
     private final SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
-    private final AccountMapper mapper = new AccountMapperImpl();
-    private final DaoBase<Long, Account> accountDao = new AccountDaoImpl(sessionFactory);
+    private final DtoEntityMapper<Account, AccountDto> mapper = new AccountMapperImpl();
+    private final RepositoryBase<Long, Account, AccountDto> accountRepositoryBase = new AccountDaoImpl(sessionFactory, mapper);
 
-    private final AccountService accountService = new AccountServiceImpl(mapper, accountDao);
+    private final AccountService accountService = new AccountServiceImpl(mapper, accountRepositoryBase);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long id = Long.valueOf(req.getParameter("id"));
-        String json = new Gson().toJson(accountService.findById(id));
-        try (PrintWriter out = resp.getWriter()) {
-            out.write(json);
+        Optional<AccountDto> accountOptional = accountService.findById(id);
+
+        if (accountOptional.isPresent()) {
+            AccountDto account = accountOptional.get();
+            String json = new Gson().toJson(account);
+            resp.getWriter().write(json);
             resp.setStatus(200);
+        } else {
+            resp.setStatus(404); // Возвращаем статус 404, если запись не найдена
         }
     }
 

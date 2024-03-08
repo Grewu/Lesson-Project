@@ -6,30 +6,42 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "userId")
-@Table(name = "account", schema = "public")
+@ToString
 @Entity
+@Table(name = "account")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private User userId;
+    @Column(name = "account_number", nullable = false)
+    private String accountNumber;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "bank_id")
-    private Bank bank;
+    @Column(name = "balance", columnDefinition = "DECIMAL(10,2) default '0.00'")
+    private BigDecimal balance;
+
+    @Column(name = "is_active", columnDefinition = "BOOLEAN default true")
+    private Boolean isActive;
+
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
+    private Timestamp createdAt;
+
+//    // Пример связи между таблицами
+//    @ManyToOne
+//    @JoinColumn(name = "bank_id", referencedColumnName = "id")
+//    private Bank bank;
 }

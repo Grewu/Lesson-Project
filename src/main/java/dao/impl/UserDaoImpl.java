@@ -1,76 +1,14 @@
 package dao.impl;
 
-import dao.api.UserDao;
+import dao.RepositoryBase;
+import data.UserDto;
 import entity.User;
-import org.hibernate.Session;
+import mapper.DtoEntityMapper;
 import org.hibernate.SessionFactory;
-import util.hibernate.HibernateUtil;
 
-import java.util.List;
-import java.util.Optional;
-
-public class UserDaoImpl implements UserDao {
-    @Override
-    public Optional<User> findById(Long id) {
-        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
-             Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-
-            User user = session.get(User.class, id);
-
-            session.getTransaction().commit();
-
-            return Optional.ofNullable(user);
-        }
-    }
-
-    @Override
-    public List<User> findAll() {
-        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
-             Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            List<User> users = session.createQuery("SELECT u FROM User u ", User.class).list();
-
-            session.getTransaction().commit();
-            return users;
-        }
-    }
-
-    @Override
-    public User save(User user) {
-        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
-             Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-
-            session.save(user);
-
-            session.getTransaction().commit();
-
-            return user;
-        }
-    }
-
-    @Override
-    public void update(User user) {
-        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
-             Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-
-            session.update(user);
-
-            session.getTransaction().commit();
-        }
-    }
-
-    @Override
-    public void delete(Long id) {
-        try (SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
-             Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-
-            session.delete(id);
-
-            session.getTransaction().commit();
-        }
+public class UserDaoImpl extends RepositoryBase<Long, User, UserDto> {
+    public UserDaoImpl(SessionFactory sessionFactory, DtoEntityMapper<User, UserDto> mapper) {
+        super(sessionFactory, User.class, UserDto.class, mapper);
     }
 }
+

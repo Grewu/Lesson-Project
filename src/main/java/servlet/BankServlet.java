@@ -1,13 +1,16 @@
 package servlet;
 
 import com.google.gson.Gson;
-import dao.api.BankDao;
+import dao.RepositoryBase;
 import dao.impl.BankDaoImpl;
 import data.BankDto;
-import mapper.BankMapper;
+import entity.Bank;
 import mapper.BankMapperImpl;
+import mapper.DtoEntityMapper;
+import org.hibernate.SessionFactory;
 import service.api.BankService;
 import service.impl.BankServiceImpl;
+import util.hibernate.HibernateUtil;
 import util.json.JsonHandler;
 
 import javax.servlet.ServletException;
@@ -20,10 +23,11 @@ import java.io.PrintWriter;
 
 @WebServlet("/bank")
 public class BankServlet extends HttpServlet {
-    private final BankMapper mapper = new BankMapperImpl();
-    private final BankDao bankDao = new BankDaoImpl();
+    private final SessionFactory sessionFactory = HibernateUtil.buildSessionFactory();
+    private final DtoEntityMapper<Bank, BankDto> mapper = new BankMapperImpl();
+    private final RepositoryBase<Long, Bank, BankDto> bankBankDtoRepositoryBase = new BankDaoImpl(sessionFactory, mapper);
 
-    private final BankService bankService = new BankServiceImpl(mapper, bankDao);
+    private final BankService bankService = new BankServiceImpl(mapper, bankBankDtoRepositoryBase);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
